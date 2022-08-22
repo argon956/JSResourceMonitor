@@ -1,0 +1,30 @@
+.position-relative
+  canvas#cpu-stats-line-chart(width='400', height='400')
+  .dropdown.d-inline-block.position-absolute.top-0.end-0.px-2
+    //- TODO: See if data-bs-auto-close='outside' option is desireable
+    a.btn.dropdown-toggle(
+      href='#',
+      role='button',
+      data-bs-toggle='dropdown',
+      data-bs-auto-close='outside',
+      aria-expanded='false'
+    )
+      i.fa.fa-gear
+    ul#cpuUsageTimeFrame.dropdown-menu
+      li
+        h6.dropdown-header Time frame (seconds):
+        //- .input-group
+          //- label.input-group-text(for='inputGroupSelect01') Options
+          select#inputGroupSelect01.form-select
+            option(value='5') 5 s
+            option(value='10') 10 s
+            option(value='15') 15 s
+            option(selected, value='30') 30 s
+      li 
+        a.dropdown-item(href='#', value='5') 5 s
+      li 
+        a.dropdown-item(href='#', value='10') 10 s
+      li 
+        a.dropdown-item(href='#', value='15') 15 s
+      li 
+        a.dropdown-item(href='#', value='30', aria-current='true') 30 s

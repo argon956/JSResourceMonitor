@@ -1,0 +1,20 @@
+extends ./layout/index
+
+//- block slider 
+//-     .slider(hidden) 
+//-         h1 Rio de Janeiro 
+//-         em aventura 
+block content
+  //- main.container.mt-5
+  //- main.container-fluid.d-flex.flex-column.mt-3           
+  .row.justify-content-center
+    .col.col-sm-6.col-lg-4.col-xl-4.col-xxl-3.py-2.px-1.mb-4
+      include ./layout/cpu-stats-doughnut-chart
+    .col.col-sm-6.col-lg-4.col-xl-4.col-xxl-3.py-2.px-1.mb-4
+      include ./layout/memory-stats-chart
+    .col.col-sm-12.col-lg-4.col-xl-4.col-xxl-3.py-2.px-1.mb-4
+      include ./layout/cpu-stats-line-chart
+  script(type='module', src='/helpers/doughnutCharts.js')
+  script(type='module', src='/helpers/stackedBarCharts.js') 
+  script(type='module', src='/helpers/lineCharts.js')
+  script(type='module', src='/helpers/vmstatReader.js')

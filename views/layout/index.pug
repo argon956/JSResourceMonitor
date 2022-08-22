@@ -1,0 +1,136 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title #{ siteName } | #{ page }
+    link(rel='preconnect', href='https://fonts.googleapis.com')
+    link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
+    link(
+      rel='stylesheet',
+      href='https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Staatliches&display=swap'
+    )
+    script(src='https://cdn.jsdelivr.net/npm/chart.js')
+    script(
+      src='https://kit.fontawesome.com/0dd4923d82.js',
+      crossorigin='anonymous'
+    )
+    link(rel='stylesheet', href='/css/bootstrap.css')
+    link(rel='stylesheet', href='/css/style.css')
+  body(class=clazz)
+    //- include headerContainer
+    //-   include sidebar
+    //-     include main
+    .container-fluid 
+      .row.flex-nowrap
+        #sidebar.col-auto.px-0.collapse.collapse-horizontal.overflow-hidden
+          h4.border-bottom.text-center.p-3
+            | #{ siteNameShort }
+          #sidebar-menu.list-group.border-0.text-center.text-sm-start.fs-5.fw-semibold
+            a.list-group-item.border-0.d-inline-block(
+              href='#',
+              data-bs-parent='#sidebar'
+            )
+              i.fa-solid.fa-grip
+              span.d-none.d-sm-inline Dashboard
+            a.list-group-item.border-0.d-inline-block(
+              href='#',
+              data-bs-parent='#sidebar'
+            )
+              i.fa-solid.fa-chart-pie.ps-0
+              span.d-none.d-sm-inline Static Charts
+            a.list-group-item.border-0.d-inline-block(
+              href='#',
+              data-bs-parent='#sidebar'
+            ) 
+              i.fa-solid.fa-chart-area
+              span.d-none.d-sm-inline Timeline Charts
+            a.list-group-item.border-0.d-inline-block(
+              href='#',
+              data-bs-parent='#sidebar'
+            )
+              i.fa.fa-clock-o
+              span.d-none.d-sm-inline Link
+            a.list-group-item.border-0.d-inline-block(
+              href='#',
+              data-bs-parent='#sidebar'
+            )
+              i.fa.fa-th
+              span.d-none.d-sm-inline Link
+            a.list-group-item.border-0.d-inline-block(
+              href='#',
+              data-bs-parent='#sidebar'
+            )
+              i.fa.fa-gear
+              span.d-none.d-sm-inline Setup
+            a.list-group-item.border-0.d-inline-block(
+              href='#',
+              data-bs-parent='#sidebar'
+            )
+              i.fa.fa-calendar
+              span.d-none.d-sm-inline Link
+            a.list-group-item.border-0.d-inline-block(
+              href='#',
+              data-bs-parent='#sidebar'
+            )
+              i.fa.fa-envelope
+              span.d-none.d-sm-inline Link
+        main.col-sm.col.border-start.ps-md-2
+          nav.navbar.navbar-expand.bg-light
+            .container-fluid
+              //- span.navbar-toggler-icon
+              //-   button.btn.navbar-toggler(
+              //-     href='#',
+              //-     data-bs-target='#sidebar',
+              //-     data-bs-toggle='collapse'
+              //-   )
+              span.navbar-brand.navbar-toggler-icon(
+                href='#',
+                data-bs-target='#sidebar',
+                data-bs-toggle='collapse'
+              )
+              //- span.border.rounded-3.p-1.text-decoration-none(
+              //-   href='#',
+              //-   data-bs-target='#sidebar',
+              //-   data-bs-toggle='collapse'
+              //- )
+              //-   i.fa.fa-navicon.fa-lg.py-2.p-1
+              //-   | Menu
+
+              #navbarSupportedContent.collapse.navbar-collapse
+                //- ul.navbar-nav.me-auto.mb-2.mb-lg-0
+                  //- li.nav-item
+                  //-   a.nav-link.active(aria-current='page', href='#') Home
+                  //- li.nav-item
+                  //-   a.nav-link(href='#') Link
+                  //- li.nav-item.dropdown
+                  //-   a.nav-link.dropdown-toggle(
+                  //-     href='#',
+                  //-     role='button',
+                  //-     data-bs-toggle='dropdown',
+                  //-     aria-expanded='false'
+                  //-   )
+                  //-     | Dropdown
+                  //-   ul.dropdown-menu
+                  //-     li
+                  //-       a.dropdown-item(href='#') Action
+                  //-     li
+                  //-       a.dropdown-item(href='#') Another action
+                  //-     li
+                  //-       hr.dropdown-divider
+                  //-     li
+                  //-       a.dropdown-item(href='#') Something else here
+                  //- li.nav-item
+                  //-   a.nav-link.disabled Disabled
+                //- .d-flex(role='search')
+                  //- input.form-control.me-2(type='search' placeholder='Search' aria-label='Search')
+                  //- button.btn.btn-outline-success(type='submit') Search
+                .d-flex.ms-auto 
+                  p < hostname >
+                  //- TODO: place a separator / gap here
+                  p Time:
+                    |
+          block content
+    include footer
+  script(src='/js/bootstrap.bundle.js')
