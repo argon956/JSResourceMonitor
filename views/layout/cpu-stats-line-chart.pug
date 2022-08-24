@@ -6,25 +6,31 @@
       href='#',
       role='button',
       data-bs-toggle='dropdown',
-      data-bs-auto-close='outside',
+      data-bs-auto-close='true',
       aria-expanded='false'
     )
       i.fa.fa-gear
+    //- TODO: could use an input field or form syntax instead
     ul#cpuUsageTimeFrame.dropdown-menu
       li
         h6.dropdown-header Time frame (seconds):
-        //- .input-group
-          //- label.input-group-text(for='inputGroupSelect01') Options
-          select#inputGroupSelect01.form-select
-            option(value='5') 5 s
-            option(value='10') 10 s
-            option(value='15') 15 s
-            option(selected, value='30') 30 s
       li 
-        a.dropdown-item(href='#', value='5') 5 s
+        a.dropdown-item(id='5') 5 s
       li 
-        a.dropdown-item(href='#', value='10') 10 s
+        a.dropdown-item(id='10') 10 s
       li 
-        a.dropdown-item(href='#', value='15') 15 s
+        a.dropdown-item(id='15') 15 s
       li 
-        a.dropdown-item(href='#', value='30', aria-current='true') 30 s
+        a.dropdown-item.active(id='30', aria-current='true') 30 s
+    //- select#inputGroupSelect01.form-select
+      option(value='5') 5 s
+      option(value='10') 10 s
+      option(value='15') 15 s
+      option(selected, value='30') 30 s
+    //- .input-group
+      label.input-group-text(for='inputGroupSelect01') Options
+      select#inputGroupSelect01.form-select
+        option(value='5') 5 s
+        option(value='10') 10 s
+        option(value='15') 15 s
+        option(selected, value='30') 30 s

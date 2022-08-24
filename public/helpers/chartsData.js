@@ -53,7 +53,7 @@ export const memoryStatsBarData = {
 };
 
 export const cpuStatsLineData = {
-  labels: ['T'], // Set these from T-10 to T
+  labels: ['T'],
   datasets: [
     // ['User + Nice', 'System', 'I/O Wait', 'Idle']
     {

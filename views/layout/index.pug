@@ -18,6 +18,7 @@ html(lang='en')
     )
     link(rel='stylesheet', href='/css/bootstrap.css')
     link(rel='stylesheet', href='/css/style.css')
+    script(src='/js/bootstrap.bundle.js')
   body(class=clazz)
     //- include headerContainer
     //-   include sidebar
@@ -133,4 +134,4 @@ html(lang='en')
                     |
           block content
     include footer
-  script(src='/js/bootstrap.bundle.js')
+    script(type='module', src='/helpers/vmstatReader.js')

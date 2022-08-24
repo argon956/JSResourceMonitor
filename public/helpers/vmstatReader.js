@@ -1,6 +1,10 @@
 import { cpuStatsDoughnutChart } from './doughnutCharts.js';
 import { memoryStatsBarChart } from './stackedBarCharts.js';
-import { cpuStatsLineChart } from './lineCharts.js';
+import {
+  cpuStatsLineChart,
+  cpuStatsLineSetup,
+  selectTimeFrame,
+} from './lineCharts.js';
 
 const cpuStats = {
   us: 0,
@@ -20,6 +24,31 @@ const memoryStats = {
 let ws = new WebSocket('ws://localhost:4080');
 // Counts seconds to populate timed charts
 let tMinus = 0;
+// Sets time frame for cpu line timed chart
+let cpuTimeFrame = 30;
+
+export const updateCpuTimeFrame = function (value) {
+  cpuTimeFrame = value;
+  // Resets tMinus value, to force a redraw with the newly set timeframe
+  tMinus = 0;
+};
+
+// TODO: extract this document listener to an app-like class / pass it over to pug
+document.addEventListener('DOMContentLoaded', () => {
+  const timeFrameItems = cpuStatsLineSetup.querySelectorAll('.dropdown-item');
+
+  timeFrameItems.forEach(timeFrame => {
+    timeFrame.onclick = () => {
+      timeFrameItems.forEach(timeFrame => {
+        if (timeFrame.classList.contains('active')) {
+          timeFrame.classList.remove('active');
+        }
+      });
+      timeFrame.classList.add('active');
+      selectTimeFrame(timeFrame.id);
+    };
+  });
+});
 
 const drawCpuDoughnutChart = function () {
   cpuStatsDoughnutChart.data.datasets[0].data = [
@@ -32,14 +61,44 @@ const drawCpuDoughnutChart = function () {
 };
 
 const drawCpuLineChart = function () {
-  // Add new T-'tMinus' label at start of array, and add new data at the end of arrays
+  // Adds new T-'tMinus' label at start of array, and adds new data at the end of arrays
   if (tMinus == 0) {
-    for (let index = 1; index < 31; index++) {
+    // Clear data when tMinus is reset
+    // TODO: Create custom method at chartsData.js to cleanly reset the values
+    console.log(cpuTimeFrame);
+    cpuStatsLineChart.data.datasets.forEach(dataset => {
+      console.log(dataset.data);
+      if (cpuStatsLineChart.data.labels.length > 1) {
+        if (cpuTimeFrame < cpuStatsLineChart.data.labels.length) {
+          // Cases
+          // 1. Data is fully covered for reduced time frame
+          if (dataset.data.length > cpuTimeFrame) {
+            let dataCrop = dataset.data.length - cpuTimeFrame;
+            for (let i = 0; i < dataCrop; i++) {
+              dataset.data.shift();
+            }
+            tMinus = cpuTimeFrame;
+            // 2. / 3. Infer tMinus from chart prior to update, for cases in which data partially covers the chart
+          } else {
+            tMinus = dataset.data.length;
+          }
+        } else {
+          tMinus = dataset.data.length;
+        }
+      }
+    });
+
+    console.log(cpuStatsLineChart.data.labels);
+    console.log(cpuTimeFrame);
+    cpuStatsLineChart.data.labels = ['T'];
+    for (let index = 1; index <= cpuTimeFrame; index++) {
+      console.log(index);
       cpuStatsLineChart.data.labels.unshift(`T-${index}`);
     }
+    console.log(cpuStatsLineChart.data.labels);
   }
 
-  if (tMinus > 30) {
+  if (tMinus > cpuTimeFrame) {
     // Remove first element on the arrays of data
     cpuStatsLineChart.data.datasets.forEach(dataset => {
       dataset.data.shift();
@@ -52,12 +111,18 @@ const drawCpuLineChart = function () {
   cpuStatsLineChart.data.datasets[2].data.push(cpuStats.wa);
   cpuStatsLineChart.data.datasets[3].data.push(cpuStats.id);
 
-  if (tMinus <= 30) {
+  // TODO: create function to adjust chart refresh rate when fully populated
+  if (tMinus <= cpuTimeFrame) {
     cpuStatsLineChart.update();
-  } else if (tMinus % 2 == 0) {
+  } else if (tMinus % 2 == 0 && cpuTimeFrame >= 30) {
     cpuStatsLineChart.update();
-    tMinus = 30;
+    tMinus = cpuTimeFrame;
+  } else if (tMinus > cpuTimeFrame && cpuTimeFrame < 30) {
+    cpuStatsLineChart.update();
+    tMinus = cpuTimeFrame;
   }
+
+  console.log(tMinus);
   tMinus++;
 };
 
